@@ -22,10 +22,10 @@ namespace TrackItNow.Models
 
 
         public Employee Employee { get; set; }
-        public Priority Priority { get; set; } // Done
-        public TicketStatus Status { get; set; } // done
-        public TicketType Type { get; set; } // done
-        public TicketResolution Resolution { get; set; } // dfonr
+        public Priority Priority { get; set; }
+        public TicketStatus Status { get; set; }
+        public TicketType Type { get; set; }
+        public TicketResolution Resolution { get; set; }
         public Project Project { get; set; }
     }
 }
