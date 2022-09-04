@@ -16,7 +16,7 @@ namespace TrackItNow.Data
         public byte TicketStatusId { get; set; }
         public byte TicketTypeId { get; set; }
         public byte TicketResolutionId { get; set; }
-        public byte ProjectId { get; set; }
+        public Guid ProjectId { get; set; }
 
     }
 }

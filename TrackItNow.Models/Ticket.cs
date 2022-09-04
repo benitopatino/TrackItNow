@@ -18,7 +18,7 @@ namespace TrackItNow.Models
         public DateTime DateDue { get; set; }
         public byte TicketTypeId { get; set; }
         public byte TicketResolutionId { get; set; }
-        public byte ProjectId { get; set; }
+        public Guid ProjectId { get; set; }
 
 
         public Employee Employee { get; set; }
