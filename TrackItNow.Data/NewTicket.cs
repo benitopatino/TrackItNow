@@ -10,7 +10,7 @@ namespace TrackItNow.Data
     {
         public string Title { get; set; }
         public string Description { get; set; }
-        public DateTime DueDate { get; set; }
+        public DateTime DateDue { get; set; }
         public Guid EmployeeId { get; set; }
         public byte PriorityId { get; set; }
         public byte TicketStatusId { get; set; }
