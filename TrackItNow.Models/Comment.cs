@@ -10,11 +10,11 @@ namespace TrackItNow.Models
     {
        public Guid Id { get; set; }
         public string Content { get; set; }
-        public Guid AuthorId { get; set; }
+        public Guid EmployeeId { get; set; }
         public Guid TicketId { get; set; }
         public DateTime DateCreated { get; set; }
 
-        public Employee Author { get; set; }
+        public Employee Employee { get; set; }
         public Ticket Ticket { get; set; }
 
     }
