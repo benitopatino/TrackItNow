@@ -14,8 +14,8 @@ namespace TrackItNow.Data
     {
         public Ticket Create(NewTicket newTicket)
         {
-            string sql = @"Insert Into Ticket (Title, Description, EmployeeId, CreatedDate, DueDate, PriorityId, TicketStatusId, TicketTypeId, TicketResolutionId, ProjectId ) 
-                                    Values (@pTitle, @pDescription, @pEmployeeId, @pCreatedDate,@pDueDate, @pPriorityId, @pTicketStatusId, @pTicketTypeId, @pTicketResolutionId, @pProjectId)";
+            string sql = @"Insert Into Ticket (Title, Description, EmployeeId, CreatedDate, DateDue, PriorityId, TicketStatusId, TicketTypeId, TicketResolutionId, ProjectId ) 
+                                    Values (@pTitle, @pDescription, @pEmployeeId, @pCreatedDate,@pDateDue, @pPriorityId, @pTicketStatusId, @pTicketTypeId, @pTicketResolutionId, @pProjectId)";
             
             SqlConnection con = new SqlConnection(DbSettings.ConnectionString);
             con.Open();
@@ -33,7 +33,7 @@ namespace TrackItNow.Data
                 ProjectId = newTicket.ProjectId,
                 EmployeeId = newTicket.EmployeeId,
                 CreatedDate = DateTime.Now,
-                DateDue = newTicket.DueDate
+                DateDue = newTicket.DateDue
             };
 
             cmd.Parameters.Add("@pTitle", SqlDbType.VarChar).Value = ticket.Title;
@@ -45,7 +45,7 @@ namespace TrackItNow.Data
             cmd.Parameters.Add("@pProjectId", SqlDbType.UniqueIdentifier).Value = ticket.ProjectId;
             cmd.Parameters.Add("@pEmployeeId", SqlDbType.UniqueIdentifier).Value = ticket.EmployeeId;
             cmd.Parameters.Add("@pCreatedDate", SqlDbType.DateTime).Value = ticket.CreatedDate;
-            cmd.Parameters.Add("@pDueDate", SqlDbType.DateTime).Value = ticket.DateDue; 
+            cmd.Parameters.Add("@pDateDue", SqlDbType.DateTime).Value = ticket.DateDue; 
 
             cmd.ExecuteNonQuery();
             con.Close();
