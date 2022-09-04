@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,9 +14,16 @@ namespace TrackItNow.Data
     {
         public Ticket Create(NewTicket newTicket)
         {
+            string sql = @"Insert Into Ticket (Title, Description, EmployeeId, CreatedDate, DueDate, PriorityId, TicketStatusId, TicketTypeId, TicketResolutionId, ProjectId ) 
+                                    Values (@pTitle, @pDescription, @pEmployeeId, @pCreatedDate,@pDueDate, @pPriorityId, @pTicketStatusId, @pTicketTypeId, @pTicketResolutionId, @pProjectId)";
+            
+            SqlConnection con = new SqlConnection(DbSettings.ConnectionString);
+            con.Open();
+
+            SqlCommand cmd = new SqlCommand(sql, con);
+
             var ticket = new Ticket()
             {
-                Id = new Guid(),
                 Title = newTicket.Title,
                 TicketResolutionId = newTicket.TicketResolutionId,
                 TicketStatusId = newTicket.TicketStatusId,
@@ -27,17 +36,19 @@ namespace TrackItNow.Data
                 DateDue = newTicket.DueDate
             };
 
+            cmd.Parameters.Add("@pTitle", SqlDbType.VarChar).Value = ticket.Title;
+            cmd.Parameters.Add("@pTicketResolutionId", SqlDbType.SmallInt).Value = ticket.TicketResolutionId;
+            cmd.Parameters.Add("@pTicketStatusId", SqlDbType.SmallInt).Value = ticket.TicketStatusId;
+            cmd.Parameters.Add("@pTicketTypeId", SqlDbType.SmallInt).Value = ticket.TicketTypeId;
+            cmd.Parameters.Add("@pDescription", SqlDbType.VarChar).Value = ticket.Description;
+            cmd.Parameters.Add("@pPriorityId", SqlDbType.SmallInt).Value = ticket.PriorityId;
+            cmd.Parameters.Add("@pProjectId", SqlDbType.UniqueIdentifier).Value = ticket.ProjectId;
+            cmd.Parameters.Add("@pEmployeeId", SqlDbType.UniqueIdentifier).Value = ticket.EmployeeId;
+            cmd.Parameters.Add("@pCreatedDate", SqlDbType.DateTime).Value = ticket.CreatedDate;
+            cmd.Parameters.Add("@pDueDate", SqlDbType.DateTime).Value = ticket.DateDue; 
 
-            string sqlStatement = "Insert Into Ticket (Title, Description, ) Values('Walter')";
-            
-            SqlConnection con = new SqlConnection(DbSettings.ConnectionString);
-            con.Open();
-
-
-            SqlCommand sqlCommand = new SqlCommand(sql, con);
-            sqlCommand.ExecuteNonQuery();
+            cmd.ExecuteNonQuery();
             con.Close();
-
 
             return ticket;
         }
