@@ -56,7 +56,7 @@ namespace TrackItNow.Data
         {
             string sql = @"
                 Update Ticket Set Title =@pTitle, Description = @pDescription, DateDue = @pDateDue, EmployeeId = @pEmployeeId,
-                PriorityId = @pPriorityId, TicketStatusId = @pTicketStatusId, TicketTypeId = @pTicketTypeId, TicketResolution = @pTicketResolutionId,
+                PriorityId = @pPriorityId, TicketStatusId = @pTicketStatusId, TicketTypeId = @pTicketTypeId, TicketResolutionId = @pTicketResolutionId,
                 ProjectId = @pProjectId
                 where Id = @pUpdateTicketId
             ";
@@ -65,6 +65,8 @@ namespace TrackItNow.Data
             con.Open();
 
             SqlCommand cmd = new SqlCommand(sql, con);
+
+            cmd.Parameters.Add("@pUpdateTicketId", SqlDbType.UniqueIdentifier).Value = Guid.Parse(updateTicket.Id);
 
             cmd.Parameters.Add("@pTitle", SqlDbType.VarChar).Value = updateTicket.Title;
             cmd.Parameters.Add("@pDescription", SqlDbType.VarChar).Value = updateTicket.Description;
