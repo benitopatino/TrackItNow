@@ -37,11 +37,11 @@ namespace TrackItNow.Data
             };
 
             cmd.Parameters.Add("@pTitle", SqlDbType.VarChar).Value = ticket.Title;
-            cmd.Parameters.Add("@pTicketResolutionId", SqlDbType.SmallInt).Value = ticket.TicketResolutionId;
-            cmd.Parameters.Add("@pTicketStatusId", SqlDbType.SmallInt).Value = ticket.TicketStatusId;
-            cmd.Parameters.Add("@pTicketTypeId", SqlDbType.SmallInt).Value = ticket.TicketTypeId;
+            cmd.Parameters.Add("@pTicketResolutionId", SqlDbType.TinyInt).Value = ticket.TicketResolutionId;
+            cmd.Parameters.Add("@pTicketStatusId", SqlDbType.TinyInt).Value = ticket.TicketStatusId;
+            cmd.Parameters.Add("@pTicketTypeId", SqlDbType.TinyInt).Value = ticket.TicketTypeId;
             cmd.Parameters.Add("@pDescription", SqlDbType.VarChar).Value = ticket.Description;
-            cmd.Parameters.Add("@pPriorityId", SqlDbType.SmallInt).Value = ticket.PriorityId;
+            cmd.Parameters.Add("@pPriorityId", SqlDbType.TinyInt).Value = ticket.PriorityId;
             cmd.Parameters.Add("@pProjectId", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ticket.ProjectId);
             cmd.Parameters.Add("@pEmployeeId", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ticket.EmployeeId);
             cmd.Parameters.Add("@pCreatedDate", SqlDbType.DateTime).Value = ticket.CreatedDate;
@@ -52,7 +52,7 @@ namespace TrackItNow.Data
 
             return ticket;
         }
-        
+
         public Ticket GetTicketById(string ticketId)
         {
             string sql = @"Select * from Ticket where Id = @pTicketId";
