@@ -28,7 +28,7 @@ namespace TrackItNow.Data.Test
                 Description = Description,
                 PriorityId = PriorityId,
                 EmployeeId = EmployeeId,
-                ProjectId = ProjectIds,
+                ProjectId = ProjectId,
                 DateDue = DateTime.Parse(DueDate)
             };
 
