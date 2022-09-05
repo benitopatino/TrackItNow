@@ -42,8 +42,8 @@ namespace TrackItNow.Data
             cmd.Parameters.Add("@pTicketTypeId", SqlDbType.SmallInt).Value = ticket.TicketTypeId;
             cmd.Parameters.Add("@pDescription", SqlDbType.VarChar).Value = ticket.Description;
             cmd.Parameters.Add("@pPriorityId", SqlDbType.SmallInt).Value = ticket.PriorityId;
-            cmd.Parameters.Add("@pProjectId", SqlDbType.UniqueIdentifier).Value = ticket.ProjectId;
-            cmd.Parameters.Add("@pEmployeeId", SqlDbType.UniqueIdentifier).Value = ticket.EmployeeId;
+            cmd.Parameters.Add("@pProjectId", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ticket.ProjectId);
+            cmd.Parameters.Add("@pEmployeeId", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ticket.EmployeeId);
             cmd.Parameters.Add("@pCreatedDate", SqlDbType.DateTime).Value = ticket.CreatedDate;
             cmd.Parameters.Add("@pDateDue", SqlDbType.DateTime).Value = ticket.DateDue; 
 
@@ -63,21 +63,24 @@ namespace TrackItNow.Data
 
             SqlCommand cmd = new SqlCommand(sql, con);
 
-            cmd.Parameters.Add("@pId", SqlDbType.UniqueIdentifier).Value = ticketId;
+            cmd.Parameters.Add("@pTicketId", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ticketId);
 
             SqlDataReader reader = cmd.ExecuteReader();
-            while(reader.Read())
+            while (reader.Read())
             {
-                ticket.Id = reader.GetString("Id");
+                ticket.Id = reader.GetGuid("Id").ToString();
                 ticket.Title = reader.GetString("Title");
                 ticket.Description = reader.GetString("Description");
                 ticket.CreatedDate = reader.GetDateTime("CreatedDate");
                 ticket.DateDue = reader.GetDateTime("DateDue");
-                ticket.EmployeeId = reader.GetUni("EmployeeId");
-
+                ticket.EmployeeId = reader.GetGuid("EmployeeId").ToString();
+                ticket.PriorityId = reader.GetByte("PriorityId");
+                ticket.TicketStatusId = reader.GetByte("TicketStatusId");
+                ticket.TicketTypeId = reader.GetByte("TicketTypeId");
+                ticket.TicketResolutionId = reader.GetByte("TicketResolutionId");
+                ticket.ProjectId = reader.GetGuid("ProjectId").ToString();
             }
 
-            
             con.Close();
 
             return ticket;
