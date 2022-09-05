@@ -52,7 +52,7 @@ namespace TrackItNow.Data
 
             return ticket;
         }
-
+        
         public Ticket GetTicketById(string ticketId)
         {
             string sql = @"Select * from Ticket where Id = @pTicketId";
@@ -84,6 +84,76 @@ namespace TrackItNow.Data
             con.Close();
 
             return ticket;
+        }
+        
+        public IEnumerable<Ticket> GetTicketsByProject(string projectId)
+        {
+            string sql = @"Select * from Ticket where ProjectId = @pProjectId";
+            IList<Ticket> tickets = new List<Ticket>();
+            SqlConnection con = new SqlConnection(DbSettings.ConnectionString);
+            con.Open();
+
+            SqlCommand cmd = new SqlCommand(sql, con);
+
+            cmd.Parameters.Add("@pProjectId", SqlDbType.UniqueIdentifier).Value = Guid.Parse(projectId);
+
+            SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                Ticket ticket = new Ticket();
+                ticket.Id = reader.GetGuid("Id").ToString();
+                ticket.Title = reader.GetString("Title");
+                ticket.Description = reader.GetString("Description");
+                ticket.CreatedDate = reader.GetDateTime("CreatedDate");
+                ticket.DateDue = reader.GetDateTime("DateDue");
+                ticket.EmployeeId = reader.GetGuid("EmployeeId").ToString();
+                ticket.PriorityId = reader.GetByte("PriorityId");
+                ticket.TicketStatusId = reader.GetByte("TicketStatusId");
+                ticket.TicketTypeId = reader.GetByte("TicketTypeId");
+                ticket.TicketResolutionId = reader.GetByte("TicketResolutionId");
+                ticket.ProjectId = reader.GetGuid("ProjectId").ToString();
+
+                tickets.Add(ticket);
+            }
+
+            con.Close();
+
+            return tickets;
+        }
+
+        public IEnumerable<Ticket> GetTicketsByEmployee(string employeeId)
+        {
+            string sql = @"Select * from Ticket where EmployeeId = @pEmployeeId";
+            IList<Ticket> tickets = new List<Ticket>();
+            SqlConnection con = new SqlConnection(DbSettings.ConnectionString);
+            con.Open();
+
+            SqlCommand cmd = new SqlCommand(sql, con);
+
+            cmd.Parameters.Add("@pEmployeeId", SqlDbType.UniqueIdentifier).Value = Guid.Parse(employeeId);
+
+            SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                Ticket ticket = new Ticket();
+                ticket.Id = reader.GetGuid("Id").ToString();
+                ticket.Title = reader.GetString("Title");
+                ticket.Description = reader.GetString("Description");
+                ticket.CreatedDate = reader.GetDateTime("CreatedDate");
+                ticket.DateDue = reader.GetDateTime("DateDue");
+                ticket.EmployeeId = reader.GetGuid("EmployeeId").ToString();
+                ticket.PriorityId = reader.GetByte("PriorityId");
+                ticket.TicketStatusId = reader.GetByte("TicketStatusId");
+                ticket.TicketTypeId = reader.GetByte("TicketTypeId");
+                ticket.TicketResolutionId = reader.GetByte("TicketResolutionId");
+                ticket.ProjectId = reader.GetGuid("ProjectId").ToString();
+
+                tickets.Add(ticket);
+            }
+
+            con.Close();
+
+            return tickets;
         }
     }
 }
