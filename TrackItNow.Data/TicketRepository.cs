@@ -83,8 +83,6 @@ namespace TrackItNow.Data
 
             return changedRows > 0;
         }
-
-
         public Ticket GetTicketById(string ticketId)
         {
             string sql = @"Select * from Ticket where Id = @pTicketId";
@@ -117,7 +115,6 @@ namespace TrackItNow.Data
 
             return ticket;
         }
-        
         public IEnumerable<Ticket> GetTicketsByProject(string projectId)
         {
             string sql = @"Select * from Ticket where ProjectId = @pProjectId";
@@ -152,7 +149,6 @@ namespace TrackItNow.Data
 
             return tickets;
         }
-
         public IEnumerable<Ticket> GetTicketsByEmployee(string employeeId)
         {
             string sql = @"Select * from Ticket where EmployeeId = @pEmployeeId";
