@@ -10,11 +10,9 @@ namespace TrackItNow.Data
     public interface ITicketRepository
     {
         Ticket Create(NewTicket newTicket);
-
         Ticket GetTicketById(string ticketId);
-
+        bool Update(Ticket updateTicket);
         IEnumerable<Ticket> GetTicketsByProject(string projectId);
-
         IEnumerable<Ticket> GetTicketsByEmployee(string employeeId);
 
     }

@@ -52,6 +52,36 @@ namespace TrackItNow.Data
 
             return ticket;
         }
+        public bool Update(Ticket updateTicket)
+        {
+            string sql = @"
+                Update Ticket Set Title =@pTitle, Description = @pDescription, DateDue = @pDateDue, EmployeeId = @pEmployeeId,
+                PriorityId = @pPriorityId, TicketStatusId = @pTicketStatusId, TicketTypeId = @pTicketTypeId, TicketResolution = @pTicketResolutionId,
+                ProjectId = @pProjectId
+                where Id = @pUpdateTicketId
+            ";
+
+            SqlConnection con = new SqlConnection(DbSettings.ConnectionString);
+            con.Open();
+
+            SqlCommand cmd = new SqlCommand(sql, con);
+
+            cmd.Parameters.Add("@pTitle", SqlDbType.VarChar).Value = updateTicket.Title;
+            cmd.Parameters.Add("@pDescription", SqlDbType.VarChar).Value = updateTicket.Description;
+            cmd.Parameters.Add("@pDateDue", SqlDbType.DateTime).Value = updateTicket.DateDue;
+            cmd.Parameters.Add("@pEmployeeId", SqlDbType.UniqueIdentifier).Value = Guid.Parse(updateTicket.EmployeeId);
+            cmd.Parameters.Add("@pPriorityId", SqlDbType.TinyInt).Value = updateTicket.PriorityId;
+            cmd.Parameters.Add("@pTicketStatusId", SqlDbType.TinyInt).Value = updateTicket.TicketStatusId;
+            cmd.Parameters.Add("@pTicketTypeId", SqlDbType.TinyInt).Value = updateTicket.TicketTypeId;
+            cmd.Parameters.Add("@pTicketResolutionId", SqlDbType.TinyInt).Value = updateTicket.TicketResolutionId;
+            cmd.Parameters.Add("@pProjectId", SqlDbType.UniqueIdentifier).Value = Guid.Parse(updateTicket.ProjectId);
+
+            int changedRows = cmd.ExecuteNonQuery();
+            con.Close();
+
+            return changedRows > 0;
+        }
+
 
         public Ticket GetTicketById(string ticketId)
         {
