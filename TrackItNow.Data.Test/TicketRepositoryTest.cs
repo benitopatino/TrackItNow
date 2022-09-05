@@ -15,7 +15,7 @@ namespace TrackItNow.Data.Test
         [InlineData("Ticket Number 4", 2, 1, 1, "This is ticket number 4.", 1, "77B7408D-5A86-4925-B993-C86B97C8F1B0", "BDADBFC4-6487-4BAC-B0D8-BAEB2CCDDD6C", "2022-03-21")]
         [InlineData("Ticket Number 5", 3, 3, 2, "This is ticket number 5.", 3, "503E2D5E-F9E2-4421-8B7D-9297F3AA8EE1", "C2D0195B-C5A5-4A24-8D1A-CC2780F6F797", "2022-06-21")]
         [InlineData("Ticket Number 6", 1, 2, 1, "This is ticket number 6.", 3, "77B7408D-5A86-4925-B993-C86B97C8F1B0", "BDADBFC4-6487-4BAC-B0D8-BAEB2CCDDD6C", "2022-12-21")]
-        public void CreateTicketTest(string Title, byte TicketResolutionId, byte TicketStatusId, byte TicketTypeId, string Description, byte PriorityId, Guid EmployeeId, Guid ProjectIds, string DueDate)
+        public void CreateTicketTest(string Title, byte TicketResolutionId, byte TicketStatusId, byte TicketTypeId, string Description, byte PriorityId, string EmployeeId, string ProjectId, string DueDate)
         {
             TicketRepository ticketRepository = new TicketRepository();
 
@@ -45,5 +45,19 @@ namespace TrackItNow.Data.Test
             Assert.Equal(newTicket.EmployeeId, ticket.EmployeeId);
             Assert.Equal(newTicket.ProjectId, ticket.ProjectId);
         }
+
+
+        [Theory]
+        [InlineData("F8C1E2EF-F4B4-44AC-8864-94B2F6F9D956")]
+        public void GetTicketByIdTest(string ticketId)
+        {
+            TicketRepository ticketRepository = new TicketRepository();
+            var ticket = ticketRepository.GetTicketById(ticketId);
+
+            Assert.Equal("Ticket Number 6", ticket.Title);
+
+        }
+
+
     }
 }
