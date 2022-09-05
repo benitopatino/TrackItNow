@@ -79,6 +79,19 @@ namespace TrackItNow.Data.Test
             Assert.Equal(14, tickets.Count());
         }
 
+        [Theory]
+        [InlineData("484656D4-3688-4E7A-91A6-0BFCBB90B4CE")]
+        public void UpdateTicketTest(string ticketId)
+        {
+            TicketRepository ticketRepository = new TicketRepository();
+            var updateTicket = ticketRepository.GetTicketById(ticketId);
+
+            updateTicket.Title = "THIS IS THE UPDATED TICKET";
+
+            bool update = ticketRepository.Update(updateTicket);
+            Assert.True(update);
+        }
+
 
     }
 }
