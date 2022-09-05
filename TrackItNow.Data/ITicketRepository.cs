@@ -10,5 +10,12 @@ namespace TrackItNow.Data
     public interface ITicketRepository
     {
         Ticket Create(NewTicket newTicket);
+
+        Ticket GetTicketById(string ticketId);
+
+        IEnumerable<Ticket> GetTicketsByProject(string projectId);
+
+        IEnumerable<Ticket> GetTicketsByEmployee(string employeeId);
+
     }
 }
