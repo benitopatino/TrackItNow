@@ -8,8 +8,8 @@ namespace TrackItNow.Models
 {
     public class ProjectMember
     {
-        public Guid MemberId { get; set; }
-        public Guid ProjectId { get; set; }
+        public string MemberId { get; set; }
+        public string ProjectId { get; set; }
 
         public Employee Member { get; set; }
         public Project Project { get; set; }

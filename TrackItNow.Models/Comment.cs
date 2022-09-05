@@ -8,7 +8,7 @@ namespace TrackItNow.Models
 {
     public class Comment
     {
-       public Guid Id { get; set; }
+       public string Id { get; set; }
         public string Content { get; set; }
         public Guid EmployeeId { get; set; }
         public Guid TicketId { get; set; }
