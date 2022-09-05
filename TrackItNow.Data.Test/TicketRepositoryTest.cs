@@ -74,7 +74,7 @@ namespace TrackItNow.Data.Test
         public void GetTicketByEmployeeId(string employeeId)
         {
             TicketRepository ticketRepository = new TicketRepository();
-            var tickets = ticketRepository.GetTicketByEmployee(employeeId);
+            var tickets = ticketRepository.GetTicketsByEmployee(employeeId);
 
             Assert.Equal(14, tickets.Count());
         }
