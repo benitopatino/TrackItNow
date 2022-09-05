@@ -55,7 +55,28 @@ namespace TrackItNow.Data.Test
             var ticket = ticketRepository.GetTicketById(ticketId);
 
             Assert.Equal("Ticket Number 6", ticket.Title);
+        }
 
+
+        [Theory]
+        [InlineData("BDADBFC4-6487-4BAC-B0D8-BAEB2CCDDD6C")]
+        public void GetTicketsByProjectTest(string projectId)
+        {
+            TicketRepository ticketRepository = new TicketRepository();
+            var tickets = ticketRepository.GetTicketsByProject(projectId);
+
+
+            Assert.Equal(14, tickets.Count());
+        }
+
+        [Theory]
+        [InlineData("503E2D5E-F9E2-4421-8B7D-9297F3AA8EE1")]
+        public void GetTicketByEmployeeId(string employeeId)
+        {
+            TicketRepository ticketRepository = new TicketRepository();
+            var tickets = ticketRepository.GetTicketByEmployee(employeeId);
+
+            Assert.Equal(14, tickets.Count());
         }
 
 
