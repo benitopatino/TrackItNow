@@ -32,5 +32,18 @@ namespace TrackItNow.Data.Test
             Assert.Equal(ProjectStatusId, project.ProjectStatusId);
         }
 
+        [Theory]
+        [InlineData("AB621BC3-377C-4C9E-846C-07AF6E8A334D")]
+        public void GetProjectByIdTest(string projectId)
+        {
+            ProjectRepository projectRepository = new ProjectRepository();
+            var project = projectRepository.GetProjectById(projectId);
+
+            Assert.IsType<Project>(project);
+            Assert.Equal("Project #5", project.Name);
+            Assert.Equal(3, project.ProjectStatusId);
+
+        }
+
     }
 }

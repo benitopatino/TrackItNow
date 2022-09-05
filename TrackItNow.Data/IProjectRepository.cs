@@ -12,5 +12,6 @@ namespace TrackItNow.Data
     public interface IProjectRepository
     {
         Project Create(Project newProject);
+        Project GetProjectById(string projectId);
     }
 }
