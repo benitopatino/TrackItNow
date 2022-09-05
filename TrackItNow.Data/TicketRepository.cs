@@ -52,5 +52,35 @@ namespace TrackItNow.Data
 
             return ticket;
         }
+
+        public Ticket GetTicketById(string ticketId)
+        {
+            string sql = @"Select * from Ticket where Id = @pTicketId";
+            Ticket ticket = new Ticket();
+
+            SqlConnection con = new SqlConnection(DbSettings.ConnectionString);
+            con.Open();
+
+            SqlCommand cmd = new SqlCommand(sql, con);
+
+            cmd.Parameters.Add("@pId", SqlDbType.UniqueIdentifier).Value = ticketId;
+
+            SqlDataReader reader = cmd.ExecuteReader();
+            while(reader.Read())
+            {
+                ticket.Id = reader.GetString("Id");
+                ticket.Title = reader.GetString("Title");
+                ticket.Description = reader.GetString("Description");
+                ticket.CreatedDate = reader.GetDateTime("CreatedDate");
+                ticket.DateDue = reader.GetDateTime("DateDue");
+                ticket.EmployeeId = reader.GetUni("EmployeeId");
+
+            }
+
+            
+            con.Close();
+
+            return ticket;
+        }
     }
 }
