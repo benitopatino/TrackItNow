@@ -13,5 +13,6 @@ namespace TrackItNow.Data
     {
         Project Create(Project newProject);
         Project GetProjectById(string projectId);
+        bool Update(Project updateProject);
     }
 }

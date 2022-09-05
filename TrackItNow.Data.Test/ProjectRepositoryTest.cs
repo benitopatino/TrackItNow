@@ -45,5 +45,23 @@ namespace TrackItNow.Data.Test
 
         }
 
+        [Theory]
+        [InlineData("AB621BC3-377C-4C9E-846C-07AF6E8A334D")]
+        public void UpdateProjectTest(string projectId)
+        {
+            ProjectRepository projectRepository = new ProjectRepository();
+            var project = projectRepository.GetProjectById(projectId);
+            project.Name = "THIS IS AN UPDATED PROJECT";
+            project.ProjectStatusId = 1;
+
+            bool updated = projectRepository.Update(project);
+            var updatedProject = projectRepository.GetProjectById(projectId);
+
+            Assert.True(updated);
+            Assert.Equal("THIS IS AN UPDATED PROJECT", updatedProject.Name);
+            Assert.Equal(1, updatedProject.ProjectStatusId);
+
+        }
+
     }
 }

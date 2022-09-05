@@ -63,5 +63,27 @@ namespace TrackItNow.Data
             return project;
 
         }
+        public bool Update(Project updateProject)
+        {
+            string sql = @"
+                Update Project Set Name = @pName, ProjectStatusId = @pProjectStatusId
+                where Id = @pUpdateProjectId
+            ";
+
+            SqlConnection con = new SqlConnection(DbSettings.ConnectionString);
+            con.Open();
+
+            SqlCommand cmd = new SqlCommand(sql, con);
+
+            cmd.Parameters.Add("@pUpdateProjectId", SqlDbType.UniqueIdentifier).Value = Guid.Parse(updateProject.Id);
+
+            cmd.Parameters.Add("@pName", SqlDbType.VarChar).Value = updateProject.Name;
+            cmd.Parameters.Add("@pProjectStatusId", SqlDbType.TinyInt).Value = updateProject.ProjectStatusId;
+
+            int changedRows = cmd.ExecuteNonQuery();
+            con.Close();
+
+            return changedRows > 0;
+        }
     }
 }
