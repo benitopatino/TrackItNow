@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrackItNow.Models", "TrackI
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrackItNow.Data", "TrackItNow.Data\TrackItNow.Data.csproj", "{77D4F3C5-4475-4299-A0FC-0BEF7C963A9E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrackItNow.Data.Test", "TrackItNow.Data.Test\TrackItNow.Data.Test.csproj", "{25D196F5-05B5-4483-A88D-038EC548FBDE}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{77D4F3C5-4475-4299-A0FC-0BEF7C963A9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{77D4F3C5-4475-4299-A0FC-0BEF7C963A9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{77D4F3C5-4475-4299-A0FC-0BEF7C963A9E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{25D196F5-05B5-4483-A88D-038EC548FBDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{25D196F5-05B5-4483-A88D-038EC548FBDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{25D196F5-05B5-4483-A88D-038EC548FBDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{25D196F5-05B5-4483-A88D-038EC548FBDE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
