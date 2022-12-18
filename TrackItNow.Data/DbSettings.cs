@@ -8,6 +8,6 @@ namespace TrackItNow.Data
 {
     public class DbSettings
     {
-        public static string ConnectionString = "Data Source=127.0.0.1,1433; Persist Security Info=false; User ID=sa;Password=thisisastrongPassword!(); Initial Catalog=TrackItNow;";
+        public static string ConnectionString = "Data Source=127.0.0.1,1433; Persist Security Info=false; User ID=sa;Password=yourStrong(!)Password; Initial Catalog=TrackItNow;";
     }
 }
