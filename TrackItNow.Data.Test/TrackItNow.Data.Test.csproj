@@ -25,4 +25,10 @@
     <ProjectReference Include="..\TrackItNow.Data\TrackItNow.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ProjectMember\" />
+    <Folder Include="Project\" />
+    <Folder Include="Ticket\" />
+  </ItemGroup>
+
 </Project>
