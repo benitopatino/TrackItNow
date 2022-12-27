@@ -54,9 +54,6 @@ namespace TrackItNow.Data
             con.Close();
 
             return ticket;
-
-
-
         }
         public bool Update(Ticket updateTicket)
         {
