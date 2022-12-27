@@ -22,8 +22,8 @@ namespace TrackItNow.Data
 
             SqlCommand cmd = new SqlCommand(sql, con);
 
-            cmd.Parameters.Add("@pMemberId", SqlDbType.UniqueIdentifier).Value = Guid.Parse(newProjectMember.MemberId);
-            cmd.Parameters.Add("@pProjectId", SqlDbType.UniqueIdentifier).Value = Guid.Parse(newProjectMember.ProjectId);
+            cmd.Parameters.Add("@pMemberId", SqlDbType.UniqueIdentifier).Value = newProjectMember.MemberId;
+            cmd.Parameters.Add("@pProjectId", SqlDbType.UniqueIdentifier).Value = newProjectMember.ProjectId;
 
             cmd.ExecuteNonQuery();
             con.Close();

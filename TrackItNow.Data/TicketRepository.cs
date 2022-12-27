@@ -14,14 +14,17 @@ namespace TrackItNow.Data
     {
         public Ticket Create(NewTicket newTicket)
         {
-            string sql = @"Insert Into Ticket (Title, Description, EmployeeId, CreatedDate, DateDue, PriorityId, TicketStatusId, TicketTypeId, TicketResolutionId, ProjectId ) 
-                                    Values (@pTitle, @pDescription, @pEmployeeId, @pCreatedDate,@pDateDue, @pPriorityId, @pTicketStatusId, @pTicketTypeId, @pTicketResolutionId, @pProjectId)";
-            
+            if (newTicket == null)
+                throw new ArgumentNullException(nameof(newTicket));
+
+            string sql = @"Insert Into Ticket (Id, Title, Description, EmployeeId, CreatedDate, DateDue, PriorityId, TicketStatusId, TicketTypeId, ProjectId ) 
+                                    Values (@pId,@pTitle, @pDescription, @pEmployeeId, @pCreatedDate,@pDateDue, @pPriorityId, @pTicketStatusId, @pTicketTypeId, @pProjectId)";
+
             SqlConnection con = new SqlConnection(DbSettings.ConnectionString);
             con.Open();
 
             SqlCommand cmd = new SqlCommand(sql, con);
-
+             
             var ticket = new Ticket()
             {
                 Title = newTicket.Title,
@@ -30,27 +33,30 @@ namespace TrackItNow.Data
                 TicketTypeId = newTicket.TicketTypeId,
                 Description = newTicket.Description,
                 PriorityId = newTicket.PriorityId,
-                ProjectId = newTicket.ProjectId,
-                EmployeeId = newTicket.EmployeeId,
+                ProjectId = Guid.Parse(newTicket.ProjectId),
+                EmployeeId = Guid.Parse(newTicket.EmployeeId),
                 CreatedDate = DateTime.Now,
                 DateDue = newTicket.DateDue
             };
 
+            cmd.Parameters.Add("@pId", SqlDbType.UniqueIdentifier).Value = Guid.NewGuid();
             cmd.Parameters.Add("@pTitle", SqlDbType.VarChar).Value = ticket.Title;
-            cmd.Parameters.Add("@pTicketResolutionId", SqlDbType.TinyInt).Value = ticket.TicketResolutionId;
             cmd.Parameters.Add("@pTicketStatusId", SqlDbType.TinyInt).Value = ticket.TicketStatusId;
             cmd.Parameters.Add("@pTicketTypeId", SqlDbType.TinyInt).Value = ticket.TicketTypeId;
             cmd.Parameters.Add("@pDescription", SqlDbType.VarChar).Value = ticket.Description;
             cmd.Parameters.Add("@pPriorityId", SqlDbType.TinyInt).Value = ticket.PriorityId;
-            cmd.Parameters.Add("@pProjectId", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ticket.ProjectId);
-            cmd.Parameters.Add("@pEmployeeId", SqlDbType.UniqueIdentifier).Value = Guid.Parse(ticket.EmployeeId);
+            cmd.Parameters.Add("@pProjectId", SqlDbType.UniqueIdentifier).Value = ticket.ProjectId;
+            cmd.Parameters.Add("@pEmployeeId", SqlDbType.UniqueIdentifier).Value = ticket.EmployeeId;
             cmd.Parameters.Add("@pCreatedDate", SqlDbType.DateTime).Value = ticket.CreatedDate;
-            cmd.Parameters.Add("@pDateDue", SqlDbType.DateTime).Value = ticket.DateDue; 
+            cmd.Parameters.Add("@pDateDue", SqlDbType.DateTime).Value = ticket.DateDue;
 
             cmd.ExecuteNonQuery();
             con.Close();
 
             return ticket;
+
+
+
         }
         public bool Update(Ticket updateTicket)
         {
@@ -71,12 +77,12 @@ namespace TrackItNow.Data
             cmd.Parameters.Add("@pTitle", SqlDbType.VarChar).Value = updateTicket.Title;
             cmd.Parameters.Add("@pDescription", SqlDbType.VarChar).Value = updateTicket.Description;
             cmd.Parameters.Add("@pDateDue", SqlDbType.DateTime).Value = updateTicket.DateDue;
-            cmd.Parameters.Add("@pEmployeeId", SqlDbType.UniqueIdentifier).Value = Guid.Parse(updateTicket.EmployeeId);
+            cmd.Parameters.Add("@pEmployeeId", SqlDbType.UniqueIdentifier).Value = updateTicket.EmployeeId;
             cmd.Parameters.Add("@pPriorityId", SqlDbType.TinyInt).Value = updateTicket.PriorityId;
             cmd.Parameters.Add("@pTicketStatusId", SqlDbType.TinyInt).Value = updateTicket.TicketStatusId;
             cmd.Parameters.Add("@pTicketTypeId", SqlDbType.TinyInt).Value = updateTicket.TicketTypeId;
             cmd.Parameters.Add("@pTicketResolutionId", SqlDbType.TinyInt).Value = updateTicket.TicketResolutionId;
-            cmd.Parameters.Add("@pProjectId", SqlDbType.UniqueIdentifier).Value = Guid.Parse(updateTicket.ProjectId);
+            cmd.Parameters.Add("@pProjectId", SqlDbType.UniqueIdentifier).Value = updateTicket.ProjectId;
 
             int changedRows = cmd.ExecuteNonQuery();
             con.Close();
@@ -103,12 +109,12 @@ namespace TrackItNow.Data
                 ticket.Description = reader.GetString("Description");
                 ticket.CreatedDate = reader.GetDateTime("CreatedDate");
                 ticket.DateDue = reader.GetDateTime("DateDue");
-                ticket.EmployeeId = reader.GetGuid("EmployeeId").ToString();
+                ticket.EmployeeId = reader.GetGuid("EmployeeId");
                 ticket.PriorityId = reader.GetByte("PriorityId");
                 ticket.TicketStatusId = reader.GetByte("TicketStatusId");
                 ticket.TicketTypeId = reader.GetByte("TicketTypeId");
                 ticket.TicketResolutionId = reader.GetByte("TicketResolutionId");
-                ticket.ProjectId = reader.GetGuid("ProjectId").ToString();
+                ticket.ProjectId = reader.GetGuid("ProjectId");
             }
 
             con.Close();
@@ -135,12 +141,12 @@ namespace TrackItNow.Data
                 ticket.Description = reader.GetString("Description");
                 ticket.CreatedDate = reader.GetDateTime("CreatedDate");
                 ticket.DateDue = reader.GetDateTime("DateDue");
-                ticket.EmployeeId = reader.GetGuid("EmployeeId").ToString();
+                ticket.EmployeeId = reader.GetGuid("EmployeeId");
                 ticket.PriorityId = reader.GetByte("PriorityId");
                 ticket.TicketStatusId = reader.GetByte("TicketStatusId");
                 ticket.TicketTypeId = reader.GetByte("TicketTypeId");
                 ticket.TicketResolutionId = reader.GetByte("TicketResolutionId");
-                ticket.ProjectId = reader.GetGuid("ProjectId").ToString();
+                ticket.ProjectId = reader.GetGuid("ProjectId");
 
                 tickets.Add(ticket);
             }
@@ -169,12 +175,12 @@ namespace TrackItNow.Data
                 ticket.Description = reader.GetString("Description");
                 ticket.CreatedDate = reader.GetDateTime("CreatedDate");
                 ticket.DateDue = reader.GetDateTime("DateDue");
-                ticket.EmployeeId = reader.GetGuid("EmployeeId").ToString();
+                ticket.EmployeeId = reader.GetGuid("EmployeeId");
                 ticket.PriorityId = reader.GetByte("PriorityId");
                 ticket.TicketStatusId = reader.GetByte("TicketStatusId");
                 ticket.TicketTypeId = reader.GetByte("TicketTypeId");
                 ticket.TicketResolutionId = reader.GetByte("TicketResolutionId");
-                ticket.ProjectId = reader.GetGuid("ProjectId").ToString();
+                ticket.ProjectId = reader.GetGuid("ProjectId");
 
                 tickets.Add(ticket);
             }
