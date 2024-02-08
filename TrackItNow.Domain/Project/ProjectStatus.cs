@@ -2,7 +2,7 @@ using TrackItNow.Domain.Base;
 
 namespace TrackItNow.Domain.Project;
 
-internal class ProjectStatus : FixedEntity
+public class ProjectStatus : FixedEntity
 {
     
 }

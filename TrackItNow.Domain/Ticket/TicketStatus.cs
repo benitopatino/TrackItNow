@@ -2,7 +2,7 @@ using TrackItNow.Domain.Base;
 
 namespace TrackItNow.Domain.Ticket;
 
-internal class TicketStatus : FixedEntity
+public class TicketStatus : FixedEntity
 {
 
 }

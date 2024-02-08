@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 namespace TrackItNow.Domain.Base;
 
-internal abstract class BaseEntity<TKey>
+public abstract class BaseEntity<TKey>
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
